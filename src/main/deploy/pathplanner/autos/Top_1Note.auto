@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7759480333775485,
+      "y": 4.4484243737005995
+    },
+    "rotation": -59.36392650631882
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Top_Leave"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "1Note",
+  "choreoAuto": false
+}

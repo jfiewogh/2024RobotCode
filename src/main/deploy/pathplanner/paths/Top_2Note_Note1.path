@@ -1,0 +1,123 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.712406748887572,
+        "y": 4.390405836367229
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.7062901579506865,
+        "y": 4.387080311197661
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7764478925850509,
+        "y": 4.111447005556441
+      },
+      "prevControl": {
+        "x": 1.7810646364373652,
+        "y": 4.106691932300312
+      },
+      "nextControl": {
+        "x": 1.764264814723132,
+        "y": 4.123995119459166
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.5135925474887673,
+        "y": 4.111447005556441
+      },
+      "prevControl": {
+        "x": 2.5108293485640085,
+        "y": 4.10638114086105
+      },
+      "nextControl": {
+        "x": 2.5231747435599394,
+        "y": 4.1290143650202555
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.712406748887572,
+        "y": 4.390405836367229
+      },
+      "prevControl": {
+        "x": 0.7088683806997249,
+        "y": 4.391507681163512
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Deploy Intake",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Retract Intake",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": []
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 840.0,
+    "maxAngularAcceleration": 760.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -57.84929751397985,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "FixedShooter_2Note",
+  "previewStartingState": {
+    "rotation": -57.370145271954776,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7759480333775485,
+        "y": 4.4484243737005995
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.475641961170928,
+        "y": 2.2321045789690452
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.7953547414863196,
+        "y": 1.1178776939121677
+      },
+      "prevControl": {
+        "x": 2.7984674236376104,
+        "y": 1.1198109200008428
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 840.0,
+    "maxAngularAcceleration": 760.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "FixedShooter_1Note",
+  "previewStartingState": {
+    "rotation": -59.403446925375654,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

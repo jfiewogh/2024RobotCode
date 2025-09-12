@@ -1,0 +1,130 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7358041938306101,
+        "y": 6.690184644258178
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.7454838474491766,
+        "y": 6.708296879556722
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7456355421970104,
+        "y": 6.99500465667598
+      },
+      "prevControl": {
+        "x": 1.751098904975588,
+        "y": 6.988947450117123
+      },
+      "nextControl": {
+        "x": 1.7377619366178911,
+        "y": 7.003734088948481
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.4428675246281197,
+        "y": 6.99500465667598
+      },
+      "prevControl": {
+        "x": 2.432534642851245,
+        "y": 6.969469374123934
+      },
+      "nextControl": {
+        "x": 2.4464107060391003,
+        "y": 7.003760794645644
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.7358041938306101,
+        "y": 6.690184644258178
+      },
+      "prevControl": {
+        "x": 0.7374669564195759,
+        "y": 6.6903627973991
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Bottom3NoteNote1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Deploy Intake",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Retract Intake",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Retract"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 840.0,
+    "maxAngularAcceleration": 760.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 63.893521070418096,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "FixedShooter_3Note",
+  "previewStartingState": {
+    "rotation": 62.66369966146656,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
