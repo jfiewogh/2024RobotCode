@@ -30,7 +30,7 @@ import frc.robot.subsystems.BlinkinLedSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import frc.robot.Constants.ClimbPosition;;
+import frc.robot.Constants.ClimbPosition;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -95,8 +95,8 @@ public class RobotContainer {
     }
 
     if (Robot.swerveEnabled) {
-      autonChooser = AutoBuilder.buildAutoChooser("Center_2Note");
-      configTab.add("Auton Selection", autonChooser).withSize(3, 1);
+      // autonChooser = AutoBuilder.buildAutoChooser("Center_2Note");
+      // configTab.add("Auton Selection", autonChooser).withSize(3, 1);
 
       swerveSubsystem.setDefaultCommand(new SwerveTeleopCommand(
         swerveSubsystem, 

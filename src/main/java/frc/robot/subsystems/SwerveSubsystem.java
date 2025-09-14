@@ -22,6 +22,9 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
@@ -107,6 +110,19 @@ public class SwerveSubsystem extends SubsystemBase {
     private ShuffleboardTab configTab = Shuffleboard.getTab("Config");
     private GenericEntry positionEntry = configTab.add("Position", "").getEntry();
 
+    StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault()
+        .getStructTopic("SwerveSubsystem/Pose", Pose2d.struct).publish();
+    StructPublisher<Rotation2d> gyroPublisher = NetworkTableInstance.getDefault()
+        .getStructTopic("SwerveSubsystem/Gyro", Rotation2d.struct).publish();
+    StructPublisher<ChassisSpeeds> currentSpeedsPublisher = NetworkTableInstance.getDefault()
+        .getStructTopic("SwerveSubsystem/CurrentSpeeds", ChassisSpeeds.struct).publish();
+    StructPublisher<ChassisSpeeds> desiredSpeedsPublisher = NetworkTableInstance.getDefault()
+        .getStructTopic("SwerveSubsystem/DesiredSpeeds", ChassisSpeeds.struct).publish();
+    StructArrayPublisher<SwerveModuleState> currentModuleStatesPublisher = NetworkTableInstance.getDefault()
+        .getStructArrayTopic("SwerveSubsystem/ModuleStates", SwerveModuleState.struct).publish();
+    StructArrayPublisher<SwerveModuleState> desiredModuleStatesPublisher = NetworkTableInstance.getDefault()
+        .getStructArrayTopic("SwerveSubsystem/ModuleStates", SwerveModuleState.struct).publish();
+
     public boolean controlOrientationIsFOD;
 
     public Double rotationHold;
@@ -133,38 +149,37 @@ public class SwerveSubsystem extends SubsystemBase {
         autoRotationController = new PIDController(kAutoRotationP, kAutoRotationI, kAutoRotationD);
         autoRotationController.enableContinuousInput(-Math.PI, Math.PI);
 
-        try {
-            config = RobotConfig.fromGUISettings();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        /*
-         *          new HolonomicPathFollowerConfig(
-                    kPhysicalMaxSpeed * 0.85, 
-                    driveBaseRadius, 
-                    new ReplanningConfig(true, true)
-                    ),
-         */
+        // try {
+        //     config = RobotConfig.fromGUISettings();
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
+        
+        // // new HolonomicPathFollowerConfig(
+        // // kPhysicalMaxSpeed * 0.85, 
+        // // driveBaseRadius, 
+        // // new ReplanningConfig(true, true)
+        // // ),
 
-        AutoBuilder.configure(
-                this::getPose,          // Robot pose supplier
-                this::resetOdometry,    // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                this::getChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-                (speeds, feedforwards) -> setChassisSpeeds(speeds),
-                new PPHolonomicDriveController(
-                    new PIDConstants(5, 0, 0),
-                    new PIDConstants(5, 0, 0)
-                ),
-                config,
-                () -> {
-                    var alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
-                },
-                this
-        );
+        // AutoBuilder.configure(
+        //         this::getPose,          // Robot pose supplier
+        //         this::resetOdometry,    // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        //         this::getChassisSpeeds, // Method thaft will drive the robot given ROBOT RELATIVE ChassisSpeeds
+        //         (speeds, feedforwards) -> setChassisSpeeds(speeds),
+        //         new PPHolonomicDriveController(
+        //             new PIDConstants(5, 0, 0),
+        //             new PIDConstants(5, 0, 0)
+        //         ),
+        //         config,
+        //         () -> {
+        //             var alliance = DriverStation.getAlliance();
+        //             if (alliance.isPresent()) {
+        //                 return alliance.get() == DriverStation.Alliance.Red;
+        //             }
+        //             return false;
+        //         },
+        //         this
+        // );
 
         if (debug)
             debugTimer.start();
@@ -251,10 +266,15 @@ public class SwerveSubsystem extends SubsystemBase {
             //Robot Oriented Drive
             chassisSpeeds = new ChassisSpeeds(x, y, r);
         }
+        
         SmartDashboard.putString("chassis speeds",chassisSpeeds.toString());
+        desiredSpeedsPublisher.set(chassisSpeeds);
+
         //Convert Chassis Speeds to individual module states
         SwerveModuleState[] moduleStates = kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
         Logger.recordOutput("Desired States", moduleStates);
+        desiredModuleStatesPublisher.set(moduleStates);
+
         return moduleStates;
     }
 
@@ -332,6 +352,11 @@ public class SwerveSubsystem extends SubsystemBase {
         positionEntry.setString(getPose().getTranslation().toString());
         Logger.recordOutput("Actual Module States", getModuleStates());
         Logger.recordOutput("Pose 2D", getPose());
+
+        posePublisher.set(getPose());
+        gyroPublisher.set(getRotation2d());
+        currentModuleStatesPublisher.set(getModuleStates());
+        currentSpeedsPublisher.set(getChassisSpeeds());
 
         if (debug) {
             if (debugTimer.advanceIfElapsed(1)) {
