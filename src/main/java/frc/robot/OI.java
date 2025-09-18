@@ -74,7 +74,7 @@ public class OI {
 
         private static final int kXTranslationAxis = 0;
         private static final int kYTranslationAxis = 1;
-        private static final int kRotationAxis = 2;
+        private static final int kRotationAxis = 4; // 2
 
         //TODO: Tune curves to driver preference
         private static final ControlCurve kXTranslationCurve = new ControlCurve(0.85,0.05,0.85,0.1);

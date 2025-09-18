@@ -14,10 +14,10 @@ public class AbsoluteEncoder {
     public enum EncoderConfig {
         //Swerve Modules (CAN)
         //Offsets determined by manually turning all modules to 0 (forward) and recording their positions
-        FrontLeftModule(Constants.canIdFrontLeftCancoder, false, -1.7441, -1.1520),
-        FrontRightModule(Constants.canIdFrontRightCancoder, false, 2.0678, 2.0816 - (Math.PI)),
-        BackLeftModule(Constants.canIdBackLeftCancoder, false, -2.0801 + (Math.PI), -0.9664),
-        BackRightModule(Constants.canIdBackRightCancoder, false, 2.8041, -0.5906);
+        FrontLeftModule(Constants.canIdFrontLeftCancoder, false, 0, 0), // -1.7441, -1.1520),
+        FrontRightModule(Constants.canIdFrontRightCancoder, false, 0, 0), // 2.0678, 2.0816 - (Math.PI)),
+        BackLeftModule(Constants.canIdBackLeftCancoder, false, 0, 0), // -2.0801 + (Math.PI), -0.9664),
+        BackRightModule(Constants.canIdBackRightCancoder, false, 0, 0); // 2.8041, -0.5906);
 
         private int ID;
         private boolean reversed;

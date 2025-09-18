@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.util.datalog.StringLogEntry;
 
+import com.ctre.phoenix6.swerve.SwerveModule;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -95,8 +96,8 @@ public class RobotContainer {
     }
 
     if (Robot.swerveEnabled) {
-      autonChooser = AutoBuilder.buildAutoChooser("Center_2Note");
-      configTab.add("Auton Selection", autonChooser).withSize(3, 1);
+      // autonChooser = AutoBuilder.buildAutoChooser("Center_2Note");
+      // configTab.add("Auton Selection", autonChooser).withSize(3, 1);
 
       swerveSubsystem.setDefaultCommand(new SwerveTeleopCommand(
         swerveSubsystem, 
@@ -146,10 +147,11 @@ public class RobotContainer {
     }
 
     if (Robot.shooterEnabled) {
-      OI.Driver.getShooterButton().whileTrue(shooterCommand);
+      OI.Driver.getIntakeButton().onTrue(new InstantCommand(swerveSubsystem::printModules));
+      // OI.Driver.getShooterButton().whileTrue(shooterCommand);
     }
 
-    if (Robot.intakeEnabled) {
+    if (false) {
       OI.Driver.getIntakeButton().whileTrue(new StartEndCommand(() -> intakeSubsystem.runIntakeMotor(Constants.intakeWheelSpeed), () -> intakeSubsystem.runIntakeMotor(0), intakeSubsystem));
       OI.Driver.getOuttakeButton().whileTrue(new StartEndCommand(() -> intakeSubsystem.runIntakeMotor(Constants.outtakeWheelSpeed), () -> intakeSubsystem.runIntakeMotor(0), intakeSubsystem));
       OI.Driver.getIntakeDeployButton().onTrue(new StartEndCommand(() -> intakeSubsystem.toggleIntakePosition(), () -> {}, intakeSubsystem));

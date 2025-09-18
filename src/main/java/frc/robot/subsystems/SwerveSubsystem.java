@@ -144,27 +144,27 @@ public class SwerveSubsystem extends SubsystemBase {
                     driveBaseRadius, 
                     new ReplanningConfig(true, true)
                     ),
-         */
+        //  */
 
-        AutoBuilder.configure(
-                this::getPose,          // Robot pose supplier
-                this::resetOdometry,    // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                this::getChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-                (speeds, feedforwards) -> setChassisSpeeds(speeds),
-                new PPHolonomicDriveController(
-                    new PIDConstants(5, 0, 0),
-                    new PIDConstants(5, 0, 0)
-                ),
-                config,
-                () -> {
-                    var alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
-                },
-                this
-        );
+        // AutoBuilder.configure(
+        //         this::getPose,          // Robot pose supplier
+        //         this::resetOdometry,    // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        //         this::getChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+        //         (speeds, feedforwards) -> setChassisSpeeds(speeds),
+        //         new PPHolonomicDriveController(
+        //             new PIDConstants(5, 0, 0),
+        //             new PIDConstants(5, 0, 0)
+        //         ),
+        //         config,
+        //         () -> {
+        //             var alliance = DriverStation.getAlliance();
+        //             if (alliance.isPresent()) {
+        //                 return alliance.get() == DriverStation.Alliance.Red;
+        //             }
+        //             return false;
+        //         },
+        //         this
+        // );
 
         if (debug)
             debugTimer.start();
@@ -188,6 +188,13 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public double getPitch() {
         return gyro.getPitch();
+    }
+
+    public void printModules(){
+        System.out.print("FL: " + frontLeft.getAbsoluteTurningPosition());
+        System.out.print("FR: " + frontRight.getAbsoluteTurningPosition());
+        System.out.print("BL: " + backLeft.getAbsoluteTurningPosition());
+        System.out.print("BR: " + backRight.getAbsoluteTurningPosition());
     }
 
     public Rotation2d getRotation2d() {
