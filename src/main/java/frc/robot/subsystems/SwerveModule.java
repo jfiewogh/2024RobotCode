@@ -238,4 +238,14 @@ public class SwerveModule extends SubsystemBase {
         actualSpeedLog.append(driveEncoder.getVelocity());
         actualAngleLog.append(getTurningPosition());
     }
+
+    /* Testing */
+
+    public void setDriveSpeed(double speed) {
+        driveMotor.set(speed);
+    }
+
+    public void setAngleSpeed(double speed) {
+        turningMotor.set(speed);
+    }
 }

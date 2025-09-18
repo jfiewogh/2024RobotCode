@@ -43,11 +43,11 @@ public class Robot extends LoggedRobot {
   //Subsystem toggle
   public static final boolean batteryEnabled = false;
   public static final boolean swerveEnabled = true;
-  public static final boolean shooterEnabled = true;
-  public static final boolean intakeEnabled = true;
+  public static final boolean shooterEnabled = false;
+  public static final boolean intakeEnabled = false;
   public static final boolean climbEnabled = false;
   public static final boolean ledEnabled = false;
-  public static final boolean blinkinEnabled = true;
+  public static final boolean blinkinEnabled = false;
 
   private Command m_autonomousCommand;
   private DataLog loopCountlog = DataLogManager.getLog();

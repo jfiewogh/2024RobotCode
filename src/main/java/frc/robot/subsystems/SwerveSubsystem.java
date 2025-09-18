@@ -375,4 +375,21 @@ public class SwerveSubsystem extends SubsystemBase {
             }
         }
     }
+
+
+    /* Testing */
+
+    public void spinDriveMotors() {
+        frontLeft.setDriveSpeed(0.05);
+        frontRight.setDriveSpeed(0.05);
+        backLeft.setDriveSpeed(0.05);
+        backRight.setDriveSpeed(0.05);
+    }
+
+    public void spinAngleMotors() {
+        frontLeft.setAngleSpeed(0.05);
+        frontRight.setAngleSpeed(0.05);
+        backLeft.setAngleSpeed(0.05);
+        backRight.setAngleSpeed(0.05);
+    }
 }

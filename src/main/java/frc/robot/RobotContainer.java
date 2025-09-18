@@ -146,12 +146,37 @@ public class RobotContainer {
       OI.Driver.getAlignBackButton().onTrue(new InstantCommand(() -> swerveSubsystem.enableRotationHold(180), swerveSubsystem));
     }
 
-    if (Robot.shooterEnabled) {
-      OI.Driver.getIntakeButton().onTrue(new InstantCommand(swerveSubsystem::printModules));
-      // OI.Driver.getShooterButton().whileTrue(shooterCommand);
+    
+    /* Testing */
+    boolean spinAngleMotors = true; // used to determine direction of angle motors
+    boolean spinDriveMotors = true; // used to determine direction of drive motors
+
+    OI.Driver.getClimbToggleButton().onTrue(
+      new InstantCommand(swerveSubsystem::printModules));
+    
+    if (spinAngleMotors) {
+      OI.Driver.getIntakeButton().whileTrue(
+        new StartEndCommand(() -> swerveSubsystem.spinAngleMotors(), () -> swerveSubsystem.stopModules(), swerveSubsystem)
+      );
     }
 
-    if (false) {
+    if (spinDriveMotors) {
+      OI.Driver.getOuttakeButton().whileTrue(
+        new StartEndCommand(() -> swerveSubsystem.spinDriveMotors(), () -> swerveSubsystem.stopModules(), swerveSubsystem)
+      );
+    }
+
+    
+
+
+  
+
+
+    if (Robot.shooterEnabled) {
+      OI.Driver.getShooterButton().whileTrue(shooterCommand);
+    }
+
+    if (Robot.intakeEnabled) {
       OI.Driver.getIntakeButton().whileTrue(new StartEndCommand(() -> intakeSubsystem.runIntakeMotor(Constants.intakeWheelSpeed), () -> intakeSubsystem.runIntakeMotor(0), intakeSubsystem));
       OI.Driver.getOuttakeButton().whileTrue(new StartEndCommand(() -> intakeSubsystem.runIntakeMotor(Constants.outtakeWheelSpeed), () -> intakeSubsystem.runIntakeMotor(0), intakeSubsystem));
       OI.Driver.getIntakeDeployButton().onTrue(new StartEndCommand(() -> intakeSubsystem.toggleIntakePosition(), () -> {}, intakeSubsystem));
