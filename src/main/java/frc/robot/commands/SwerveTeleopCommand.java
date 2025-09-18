@@ -5,7 +5,10 @@
 package frc.robot.commands;
 
 import java.util.function.Supplier;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -13,6 +16,9 @@ public class SwerveTeleopCommand extends Command {
 
     private final SwerveSubsystem swerveSubsystem;
     private final Supplier<Double> xJoystick, yJoystick, rJoystick;
+
+    StructPublisher<ChassisSpeeds> speedsPublisher = NetworkTableInstance.getDefault()
+        .getStructTopic("SwerveTeleopCommand/ChassisSpeeds", ChassisSpeeds.struct).publish();
 
     public SwerveTeleopCommand(SwerveSubsystem swerveSubsystem,
             Supplier<Double> xJoystick, Supplier<Double> yJoystick, Supplier<Double> rJoystick) {
@@ -34,6 +40,7 @@ public class SwerveTeleopCommand extends Command {
             swerveSubsystem.convertToModuleStates(xJoystick.get(), yJoystick.get(), rJoystick.get());
         swerveSubsystem.setModuleStates(moduleStates);
 
+        speedsPublisher.set(swerveSubsystem.getChassisSpeeds());
     }
 
     @Override
