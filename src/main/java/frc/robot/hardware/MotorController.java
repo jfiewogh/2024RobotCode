@@ -18,9 +18,9 @@ public class MotorController {
     public static enum MotorConfig {
 
         // Swerve Modules
-        FrontLeftModuleDrive(Constants.canIdFrontLeftMotorDrive, 50, IdleMode.kBrake, true),
+        FrontLeftModuleDrive(Constants.canIdFrontLeftMotorDrive, 50, IdleMode.kBrake, false),
         FrontLeftModuleTurn(Constants.canIdFrontLeftMotorPivot, 40, IdleMode.kBrake, true),
-        FrontRightModuleDrive(Constants.canIdFrontRightMotorDrive, 50, IdleMode.kBrake, true),
+        FrontRightModuleDrive(Constants.canIdFrontRightMotorDrive, 50, IdleMode.kBrake, false),
         FrontRightModuleTurn(Constants.canIdFrontRightMotorPivot, 40, IdleMode.kBrake, true),
         BackLeftModuleDrive(Constants.canIdBackLeftMotorDrive, 50, IdleMode.kBrake),
         BackLeftModuleTurn(Constants.canIdBackLeftMotorPivot, 40, IdleMode.kBrake, true),

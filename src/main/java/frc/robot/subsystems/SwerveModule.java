@@ -109,7 +109,7 @@ public class SwerveModule extends SubsystemBase {
         simTurningEncoder = new RelativeEncoderSim(turningMotor);
 
         turningPIDController = turningMotor.getClosedLoopController();
-        simTurningPIDController = new PIDController(0.5, 0, 0);
+        simTurningPIDController = new PIDController(2, 0, 0);
             // turningPIDController.getP(), turningPIDController.getI(), turningPIDController.getD());
 
         simTurningPIDController.enableContinuousInput(-Math.PI, Math.PI);
@@ -174,10 +174,21 @@ public class SwerveModule extends SubsystemBase {
             stop();
             return;
         }
-        desiredState.optimize(getState().angle);
-        driveMotor.set(desiredState.speedMetersPerSecond / kMaxSpeedMetersPerSecond);
-        turningSetpoint = calculateSetpoint(desiredState.angle.getRadians());
-        turningPIDController.setReference(turningSetpoint, ControlType.kPosition);
+
+        desiredState.optimize(Rotation2d.fromRotations(
+            absoluteEncoder.getAbsolutePosition().getValueAsDouble()));
+
+        double driveSpeed = desiredState.speedMetersPerSecond / kMaxSpeedMetersPerSecond;
+
+        turningMotor.set(
+            simTurningPIDController.calculate(
+                absoluteEncoder.getAbsolutePosition().getValueAsDouble(), 
+                desiredState.angle.getRotations()));
+
+        driveMotor.set(driveSpeed);
+
+        
+        // turningPIDController.setReference(turningSetpoint, ControlType.kPosition);
 
         SmartDashboard.putString("Swerve[" + ID + "] state", desiredState.toString());
         desiredAngleLog.append(desiredState.angle.getRadians());

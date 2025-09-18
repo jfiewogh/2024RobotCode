@@ -30,8 +30,6 @@ import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -91,7 +89,7 @@ public class SwerveSubsystem extends SubsystemBase {
         "BR");
 
     // TODO: check if kMXP_SPI or kMXP_UART
-    private AHRS gyro = new AHRS(NavXComType.kMXP_SPI); // new AHRS(SPI.Port.kMXP);
+    private AHRS gyro = new AHRS(NavXComType.kUSB1); // new AHRS(SPI.Port.kMXP);
     private double gyroOffset; //Offset in degrees
     private SwerveDriveOdometry odometer = new SwerveDriveOdometry(kDriveKinematics, getRotation2d(), getModulePositions());
 
@@ -207,10 +205,10 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void printModules(){
-        System.out.print("FL: " + frontLeft.getAbsoluteTurningPosition());
-        System.out.print("FR: " + frontRight.getAbsoluteTurningPosition());
-        System.out.print("BL: " + backLeft.getAbsoluteTurningPosition());
-        System.out.print("BR: " + backRight.getAbsoluteTurningPosition());
+        System.out.println("FL: " + frontLeft.getAbsoluteTurningPosition() * SwerveModule.kTurningMotorGearRatio);
+        System.out.println("FR: " + frontRight.getAbsoluteTurningPosition() * SwerveModule.kTurningMotorGearRatio);
+        System.out.println("BL: " + backLeft.getAbsoluteTurningPosition() * SwerveModule.kTurningMotorGearRatio);
+        System.out.println("BR: " + backRight.getAbsoluteTurningPosition() * SwerveModule.kTurningMotorGearRatio + "\n");
     }
 
     public Rotation2d getRotation2d() {
@@ -228,6 +226,8 @@ public class SwerveSubsystem extends SubsystemBase {
     public void toggleOrientation(){
         //Toggle control orientation from FOD/ROD
         controlOrientationIsFOD = !controlOrientationIsFOD;
+
+        System.out.println(controlOrientationIsFOD);
         controlOrientationLog.append(controlOrientationIsFOD);
         controlOrientationEntry.setBoolean(controlOrientationIsFOD);
     }
@@ -267,13 +267,13 @@ public class SwerveSubsystem extends SubsystemBase {
 
         //Construct Chassis Speeds
         ChassisSpeeds chassisSpeeds;
-        if(controlOrientationIsFOD){
-            //Field Oriented Drive
+        // if(controlOrientationIsFOD){
+        //     //Field Oriented Drive
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(x, y, r, this.getRotation2d());
-        } else {
-            //Robot Oriented Drive
-            chassisSpeeds = new ChassisSpeeds(x, y, r);
-        }
+        // } else {
+        //     //Robot Oriented Drive
+        //     chassisSpeeds = new ChassisSpeeds(x, y, r);
+        // }
         
         SmartDashboard.putString("chassis speeds",chassisSpeeds.toString());
         desiredSpeedsPublisher.set(chassisSpeeds);

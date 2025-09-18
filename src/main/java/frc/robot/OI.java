@@ -51,7 +51,7 @@ public class OI {
             }
         };
 
-        private static final Joystick kJoystick = new Joystick(OI.kDriverJoystickPort);
+        public static final Joystick kJoystick = new Joystick(OI.kDriverJoystickPort);
 
         private static final Button kOrientationButton = Button.Start; //Toggle swerve orientation
         private static final Button kZeroButton = Button.Back; //Zero the gyroscope

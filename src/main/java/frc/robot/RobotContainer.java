@@ -13,6 +13,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -31,6 +32,7 @@ import frc.robot.subsystems.BlinkinLedSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ClimbPosition;
 
 /**
@@ -140,7 +142,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     if (Robot.swerveEnabled) {
-      OI.Driver.getOrientationButton().onTrue(new InstantCommand(swerveSubsystem::toggleOrientation));
+      // OI.Driver.getOrientationButton().onTrue(new InstantCommand(swerveSubsystem::toggleOrientation));
+      new JoystickButton(OI.Driver.kJoystick,8).onTrue(new InstantCommand(() -> System.out.println(swerveSubsystem.getHeading())));
+      
       OI.Driver.getZeroButton().onTrue(new InstantCommand(swerveSubsystem::zeroHeading));
       OI.Driver.getAlignForwardButton().onTrue(new InstantCommand(() -> swerveSubsystem.enableRotationHold(0), swerveSubsystem));
       OI.Driver.getAlignBackButton().onTrue(new InstantCommand(() -> swerveSubsystem.enableRotationHold(180), swerveSubsystem));
@@ -151,17 +155,19 @@ public class RobotContainer {
     boolean spinAngleMotors = true; // used to determine direction of angle motors
     boolean spinDriveMotors = true; // used to determine direction of drive motors
 
-    OI.Driver.getClimbToggleButton().onTrue(
-      new InstantCommand(swerveSubsystem::printModules));
+    new JoystickButton(OI.Driver.kJoystick, 3).onTrue(
+      new InstantCommand(() -> {
+        swerveSubsystem.printModules();
+      }));
     
     if (spinAngleMotors) {
-      OI.Driver.getIntakeButton().whileTrue(
+      new JoystickButton(OI.Driver.kJoystick, 1).whileTrue(
         new StartEndCommand(() -> swerveSubsystem.spinAngleMotors(), () -> swerveSubsystem.stopModules(), swerveSubsystem)
       );
     }
 
     if (spinDriveMotors) {
-      OI.Driver.getOuttakeButton().whileTrue(
+      new JoystickButton(OI.Driver.kJoystick, 2).whileTrue(
         new StartEndCommand(() -> swerveSubsystem.spinDriveMotors(), () -> swerveSubsystem.stopModules(), swerveSubsystem)
       );
     }
