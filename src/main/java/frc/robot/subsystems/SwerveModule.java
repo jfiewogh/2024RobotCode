@@ -109,7 +109,7 @@ public class SwerveModule extends SubsystemBase {
         simTurningEncoder = new RelativeEncoderSim(turningMotor);
 
         turningPIDController = turningMotor.getClosedLoopController();
-        simTurningPIDController = new PIDController(2, 0, 0);
+        simTurningPIDController = new PIDController(1, 0, 0);
             // turningPIDController.getP(), turningPIDController.getI(), turningPIDController.getD());
 
         simTurningPIDController.enableContinuousInput(-Math.PI, Math.PI);
