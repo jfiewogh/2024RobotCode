@@ -36,7 +36,7 @@ public final class Constants {
     public static final int canIdBackRightCancoder = 26;
 
     // Driving Constants
-    public static final double driveSpeedScale = 0.25; // Use this to scale the driving speed
+    public static final double driveSpeedScale = 0.32; // Use this to scale the driving speed
 
     // Shooter constants
     // Robot values

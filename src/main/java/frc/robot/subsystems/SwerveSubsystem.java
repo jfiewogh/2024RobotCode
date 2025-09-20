@@ -185,6 +185,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }   
 
     public void zeroHeading() {
+        System.out.println("ZERO");
         if (gyro.isCalibrating()){errors.append("gyro failed to calibrate before zero");} 
         gyro.reset();
         gyroOffset = 0;
@@ -269,10 +270,10 @@ public class SwerveSubsystem extends SubsystemBase {
         ChassisSpeeds chassisSpeeds;
         // if(controlOrientationIsFOD){
         //     //Field Oriented Drive
-            // chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(x, y, r, this.getRotation2d());
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(x, y, r, this.getRotation2d());
         // } else {
         //     //Robot Oriented Drive
-            chassisSpeeds = new ChassisSpeeds(x, y, r);
+            // chassisSpeeds = new ChassisSpeeds(x, y, r);
         // }
         
         SmartDashboard.putString("chassis speeds",chassisSpeeds.toString());

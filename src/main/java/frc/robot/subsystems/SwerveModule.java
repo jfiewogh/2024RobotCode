@@ -183,7 +183,9 @@ public class SwerveModule extends SubsystemBase {
         turningMotor.set(
             simTurningPIDController.calculate(
                 absoluteEncoder.getAbsolutePosition().getValueAsDouble(), 
-                desiredState.angle.getRotations()));
+                desiredState.angle.getRotations()
+            )
+        );
 
         driveMotor.set(driveSpeed);
 
